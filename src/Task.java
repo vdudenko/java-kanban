@@ -1,5 +1,5 @@
 public class Task {
-    private final int id;
+    private int id;
     public String name;
     public String description;
     public Status status;
@@ -7,14 +7,16 @@ public class Task {
     public Task (String name, String description) {
         this.name = name;
         this.description = description;
-        this.id = TaskManager.nextTaskId++;
     }
 
     public Task (String name, String description, Status status) {
         this.name = name;
         this.description = description;
         this.status = status;
-        this.id = TaskManager.nextTaskId++;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -46,5 +48,9 @@ public class Task {
 
     public Status getStatus() {
         return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
