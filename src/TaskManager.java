@@ -4,9 +4,9 @@ import java.util.HashMap;
 public class TaskManager {
     private int nextTaskId = 1;
 
-    private HashMap<Integer, Task> tasks = new HashMap<Integer, Task>();
-    private HashMap<Integer, SubTask> subTasks = new HashMap<Integer, SubTask>();
-    private HashMap<Integer, Epic> epics = new HashMap<Integer, Epic>();
+    private final HashMap<Integer, Task> tasks = new HashMap<Integer, Task>();
+    private final HashMap<Integer, SubTask> subTasks = new HashMap<Integer, SubTask>();
+    private final HashMap<Integer, Epic> epics = new HashMap<Integer, Epic>();
 
     public HashMap<Integer, Task> getTasks() {
         return tasks;
