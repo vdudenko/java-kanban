@@ -8,16 +8,16 @@ public class TaskManager {
     private final HashMap<Integer, SubTask> subTasks = new HashMap<Integer, SubTask>();
     private final HashMap<Integer, Epic> epics = new HashMap<Integer, Epic>();
 
-    public HashMap<Integer, Task> getTasks() {
-        return tasks;
+    public ArrayList<Task> getTasks() {
+        return new ArrayList<>(tasks.values());
     }
 
-    public HashMap<Integer, SubTask> getSubTasks() {
-        return subTasks;
+    public ArrayList<SubTask> getSubTasks() {
+        return new ArrayList<>(subTasks.values());
     }
 
-    public HashMap<Integer, Epic> getEpics() {
-        return epics;
+    public ArrayList<Epic> getEpics() {
+        return new ArrayList<>(epics.values());
     }
 
     // Получение тасков
