@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
@@ -19,18 +20,16 @@ class InMemoryHistoryManagerTest {
         taskManager.getTask(1);
         assertEquals(1, taskManager.getHistory().size());
         taskManager.getTask(1);
-        assertEquals(2, taskManager.getHistory().size());
+        assertEquals(1, taskManager.getHistory().size());
     }
 
     @Test
-    void shouldBeEqualTo10() {
-        Task task = new Task("name", "test description", Status.NEW);
-        taskManager.addTask(task);
-
-        for (int i = 0; i < 12; i++) {
-            taskManager.getTask(1);
+    void shouldBeMoreThan10() {
+        for (int i = 1; i < 12; i++) {
+            Task task = new Task("name", "test description", Status.NEW);
+            taskManager.addTask(task);
+            taskManager.getTask(i);
         }
-
-        assertEquals(10, taskManager.getHistory().size());
+        assertEquals(11, taskManager.getHistory().size());
     }
 }
