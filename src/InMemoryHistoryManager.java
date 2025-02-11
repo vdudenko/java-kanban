@@ -4,20 +4,25 @@ import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private static final HashMap<Integer, Node<Task>> history = new HashMap<>();
-    private final CustomLinkedList<Task> customLinkedList = new CustomLinkedList<>();
+
+    private Node<Task> head;
+    private Node<Task> tail;
+    private int size = 0;
 
     @Override
     public List<Task> getHistory() {
-        return customLinkedList.getTasks();
+        return getTasks();
     }
 
+    @Override
     public void addToHistory(Task task) {
         removeNode(history.get(task.getId()));
-        customLinkedList.linkLast(task);
+        linkLast(task);
         history.remove(task.getId());
-        history.put(task.getId(), customLinkedList.tail);
+        history.put(task.getId(), tail);
     }
 
+    @Override
     public void remove(int id) {
         removeNode(history.get(id));
         history.remove(id);
@@ -26,15 +31,15 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void removeNode(Node<Task> node) {
         if (history.containsValue(node)) {
             if (node.prev == null && node.next == null) {
-                customLinkedList.tail = null;
-                customLinkedList.head = null;
+                this.tail = null;
+                this.head = null;
             }
             if (node.prev == null && node.next != null) {
                 Node<Task> nextNode = node.next;
                 nextNode.prev = null;
-                customLinkedList.head = nextNode;
+                this.head = nextNode;
                 if (nextNode.next == null) {
-                    customLinkedList.tail = null;
+                    this.tail = null;
                 }
             }
             if (node.prev != null && node.next != null) {
@@ -45,40 +50,34 @@ public class InMemoryHistoryManager implements HistoryManager {
             }
             if (node.prev != null && node.next == null) {
                 Node<Task> prevNode = node.prev;
-                customLinkedList.tail = prevNode;
+                this.tail = prevNode;
                 prevNode.next = null;
             }
-            customLinkedList.size--;
+            this.size--;
         }
     }
 
-    public static class CustomLinkedList<T> {
-        private Node<T> head;
-        private Node<T> tail;
-        private int size = 0;
-
-        public void linkLast(T element) {
-            final Node<T> oldTail = tail;
-            final Node<T> newNode = new Node<>(oldTail, element, null);
-            tail = newNode;
-            if (oldTail == null || head == null) {
-                head = newNode;
-            } else {
-                oldTail.next = newNode;
-            }
-            size++;
+    public void linkLast(Task task) {
+        final Node<Task> oldTail = tail;
+        final Node<Task> newNode = new Node<>(oldTail, task, null);
+        tail = newNode;
+        if (oldTail == null || head == null) {
+            head = newNode;
+        } else {
+            oldTail.next = newNode;
         }
+        size++;
+    }
 
-        public List<T> getTasks() {
-            ArrayList<T> tasks = new ArrayList<>();
-            Node<T> head1 = head;
-            if (head1 == null) return tasks;
-            while (head1.next != null) {
-                tasks.add(head1.data);
-                head1 = head1.next;
-            }
+    public List<Task> getTasks() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        Node<Task> head1 = head;
+        if (head1 == null) return tasks;
+        while (head1.next != null) {
             tasks.add(head1.data);
-            return tasks;
+            head1 = head1.next;
         }
+        tasks.add(head1.data);
+        return tasks;
     }
 }
