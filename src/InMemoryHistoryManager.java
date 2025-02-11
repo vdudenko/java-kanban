@@ -24,7 +24,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     public void removeNode(Node<Task> node) {
-        if(history.containsValue(node)) {
+        if (history.containsValue(node)) {
             if (node.prev == null && node.next == null) {
                 customLinkedList.tail = null;
                 customLinkedList.head = null;
@@ -42,7 +42,7 @@ public class InMemoryHistoryManager implements HistoryManager {
                 Node<Task> nextNode = node.next;
                 prevNode.next = nextNode;
                 nextNode.prev = prevNode;
-            };
+            }
             if (node.prev != null && node.next == null) {
                 Node<Task> prevNode = node.prev;
                 customLinkedList.tail = prevNode;
@@ -52,7 +52,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    static public class CustomLinkedList<T> {
+    public static class CustomLinkedList<T> {
         private Node<T> head;
         private Node<T> tail;
         private int size = 0;
@@ -72,7 +72,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         public List<T> getTasks() {
             ArrayList<T> tasks = new ArrayList<>();
             Node<T> head1 = head;
-            if(head1 == null) return tasks;
+            if (head1 == null) return tasks;
             while (head1.next != null) {
                 tasks.add(head1.data);
                 head1 = head1.next;
