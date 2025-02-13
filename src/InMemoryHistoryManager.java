@@ -28,7 +28,31 @@ public class InMemoryHistoryManager implements HistoryManager {
         history.remove(id);
     }
 
-    public void removeNode(Node<Task> node) {
+    private void linkLast(Task task) {
+        final Node<Task> oldTail = tail;
+        final Node<Task> newNode = new Node<>(oldTail, task, null);
+        tail = newNode;
+        if (oldTail == null || head == null) {
+            head = newNode;
+        } else {
+            oldTail.next = newNode;
+        }
+        size++;
+    }
+
+    private List<Task> getTasks() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        Node<Task> head1 = head;
+        if (head1 == null) return tasks;
+        while (head1.next != null) {
+            tasks.add(head1.data);
+            head1 = head1.next;
+        }
+        tasks.add(head1.data);
+        return tasks;
+    }
+
+    private void removeNode(Node<Task> node) {
         if (history.containsValue(node)) {
             if (node.prev == null && node.next == null) {
                 this.tail = null;
@@ -55,29 +79,5 @@ public class InMemoryHistoryManager implements HistoryManager {
             }
             this.size--;
         }
-    }
-
-    public void linkLast(Task task) {
-        final Node<Task> oldTail = tail;
-        final Node<Task> newNode = new Node<>(oldTail, task, null);
-        tail = newNode;
-        if (oldTail == null || head == null) {
-            head = newNode;
-        } else {
-            oldTail.next = newNode;
-        }
-        size++;
-    }
-
-    public List<Task> getTasks() {
-        ArrayList<Task> tasks = new ArrayList<>();
-        Node<Task> head1 = head;
-        if (head1 == null) return tasks;
-        while (head1.next != null) {
-            tasks.add(head1.data);
-            head1 = head1.next;
-        }
-        tasks.add(head1.data);
-        return tasks;
     }
 }
