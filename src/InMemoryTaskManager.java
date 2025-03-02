@@ -52,14 +52,19 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
-        task.setId(generateId());
+        if (task.getId() == 0) {
+            task.setId(generateId());
+        }
         tasks.put(task.getId(), task);
     }
 
     @Override
     public void addEpic(Epic epic) {
-        epic.setId(generateId());
+        if(epic.getId() == 0) {
+            epic.setId(generateId());
+        }
         epics.put(epic.getId(), epic);
+        updateEpicStatus(epic.getId());
     }
 
     @Override
