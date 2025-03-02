@@ -26,7 +26,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         tes.addSubTask(subTask2);
     }
 
-    static FileBackedTaskManager loadFromFile(File file) {
+    public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
         try {
             String fileData = Files.readString(Path.of(file.toURI()));
@@ -46,6 +46,24 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             return null;
         }
         return manager;
+    }
+
+    @Override
+    public void addTask(Task task) {
+        super.addTask(task);
+        save(task);
+    }
+
+    @Override
+    public void addEpic(Epic epic) {
+        super.addEpic(epic);
+        save(epic);
+    }
+
+    @Override
+    public void addSubTask(SubTask subTask) {
+        super.addSubTask(subTask);
+        save(subTask);
     }
 
     private void save(Task task) {
@@ -80,23 +98,5 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 addTask(task);
                 return task;
         }
-    }
-
-    @Override
-    public void addTask(Task task) {
-        super.addTask(task);
-        save(task);
-    }
-
-    @Override
-    public void addEpic(Epic epic) {
-        super.addEpic(epic);
-        save(epic);
-    }
-
-    @Override
-    public void addSubTask(SubTask subTask) {
-        super.addSubTask(subTask);
-        save(subTask);
     }
 }
