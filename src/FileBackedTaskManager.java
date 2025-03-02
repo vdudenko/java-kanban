@@ -34,7 +34,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 String[] lines = fileData.split("\\n");
                 if (lines.length > 1) {
                     for (int i = 1; i < lines.length; i++) {
-                        if(!lines[i].isBlank()) {
+                        if (!lines[i].isBlank()) {
                             Task task = manager.fromString(lines[i]);
                         }
                     }
