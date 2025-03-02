@@ -60,7 +60,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addEpic(Epic epic) {
-        if(epic.getId() == 0) {
+        if (epic.getId() == 0) {
             epic.setId(generateId());
         }
         epics.put(epic.getId(), epic);
@@ -75,7 +75,9 @@ public class InMemoryTaskManager implements TaskManager {
         if (!epic.subTaskIds.contains(subTaskId)) {
             epic.subTaskIds.add(subTaskId);
         }
-        subTask.setId(generateId());
+        if (subTask.getId() == 0) {
+            subTask.setId(generateId());
+        }
         subTasks.put(subTask.getId(), subTask);
         updateEpicStatus(subTask.getEpicId());
     }
