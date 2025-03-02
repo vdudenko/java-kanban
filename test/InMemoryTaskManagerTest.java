@@ -35,12 +35,13 @@ class InMemoryTaskManagerTest {
 
     @Test
     void shouldBeEqualBeforeAndAfterAdding() {
-        String string = "Task{" +
-                "id=" + 1 +
-                ", name='name'" +
-                ", description='test description'" +
-                ", status=NEW" +
-                '}';
+        String string = String.join(",", new String[]{
+                String.valueOf(1),
+                "TASK",
+                "name",
+                "test description",
+                "NEW",
+        });
         Task task = new Task("name", "test description", Status.NEW);
         taskManager.addTask(task);
 
