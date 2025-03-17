@@ -17,7 +17,7 @@ class EpicTest {
 
         taskManager.addEpic(epic);
 
-        SubTask subTask = new SubTask("Test sub task", "Test sub task description", Status.NEW, epic.getId());
+        SubTask subTask = new SubTask("Test sub task", "Test sub task description", Status.NEW, epic.getId(), 30, "17.03.2024 21:00");
         taskManager.addSubTask(subTask);
 
         assertNotNull(taskManager.getEpic(epic.getId()));
