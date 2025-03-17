@@ -1,3 +1,6 @@
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class SubTask extends Task {
     private final int epicId;
     public TaskType type = TaskType.SUB_TASK;
