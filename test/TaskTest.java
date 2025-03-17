@@ -16,8 +16,8 @@ class TaskTest {
 
     @Test
     public void shouldBeEqualById() {
-        Task task = new Task("name", "test description", Status.NEW);
-        Task task2 = new Task("name", "test description", Status.NEW);
+        Task task = new Task("name", "test description", Status.NEW, 30, "17.03.2024 21:00");
+        Task task2 = new Task("name", "test description", Status.NEW, 30, "17.03.2024 21:00");
 
         taskManager.addTask(task);
         taskManager.addTask(task2);
@@ -36,8 +36,8 @@ class TaskTest {
         assertEquals(epic, taskManager.getEpic(epic.getId()));
         assertNotEquals(epic, epic2);
 
-        SubTask subTask = new SubTask("Test sub task", "Test sub task description", Status.NEW, epic.getId());
-        SubTask subTask2 = new SubTask("Test sub task", "Test sub task description", Status.NEW, epic.getId());
+        SubTask subTask = new SubTask("Test sub task", "Test sub task description", Status.NEW, epic.getId(), 30, "17.03.2024 17:00");
+        SubTask subTask2 = new SubTask("Test sub task", "Test sub task description", Status.NEW, epic.getId(), 30, "17.03.2024 17:00");
 
         taskManager.addSubTask(subTask);
         taskManager.addSubTask(subTask2);

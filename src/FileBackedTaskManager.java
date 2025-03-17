@@ -16,13 +16,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         File newfile = File.createTempFile("test", null);
         FileBackedTaskManager tes = new FileBackedTaskManager(newfile);
         tes.addHeader();
-        Task task = new Task("task1", "task", Status.NEW);
+        Task task = new Task("task1", "task", Status.NEW,  30, "17.03.2024 21:00");
         tes.addTask(task);
         Epic epic = new Epic("Epic 1", "test epic description", new ArrayList<>());
         tes.addEpic(epic);
-        SubTask subTask = new SubTask("Test sub task 1", "Test sub task description", Status.NEW, epic.getId());
+        SubTask subTask = new SubTask("Test sub task 1", "Test sub task description", Status.NEW, epic.getId(), 30, "17.03.2024 17:00");
         tes.addSubTask(subTask);
-        SubTask subTask2 = new SubTask("Test sub task 1", "Test sub task description", Status.NEW, epic.getId());
+        SubTask subTask2 = new SubTask("Test sub task 1", "Test sub task description", Status.NEW, epic.getId(), 30, "18.03.2024 17:00");
         tes.addSubTask(subTask2);
     }
 
@@ -35,7 +35,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 if (lines.length > 1) {
                     for (int i = 1; i < lines.length; i++) {
                         if (!lines[i].isBlank()) {
-                            Task task = manager.fromString(lines[i]);
+                            manager.fromString(lines[i]);
                         }
                     }
                 }
@@ -76,27 +76,24 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void addHeader() {
         try (FileWriter file = new FileWriter(this.file, true)) {
-            file.write("id,type,name,status,description,epic\n");
+            file.write("id,type,name,status,description,start,duration,end,epic\n");
         } catch (IOException e) {
             throw new ManagerSaveException("Произошло исключение в методе save()");
         }
     }
 
-    private Task fromString(String value) {
+    private void fromString(String value) {
         String[] taskArr = value.split(",");
         switch (taskArr[1]) {
             case "EPIC":
-                Epic epic = new Epic(Integer.parseInt(taskArr[0]), taskArr[2], taskArr[3], Status.valueOf(taskArr[4]));
+                Epic epic = new Epic(Integer.parseInt(taskArr[0]), taskArr[2], taskArr[3], Status.valueOf(taskArr[4]), Integer.parseInt(taskArr[5]), taskArr[6]);
                 addEpic(epic);
-                return epic;
             case "SUB_TASK":
-                SubTask subTask = new SubTask(Integer.parseInt(taskArr[0]), taskArr[2], taskArr[3], Status.valueOf(taskArr[4]), Integer.parseInt(taskArr[5]));
+                SubTask subTask = new SubTask(Integer.parseInt(taskArr[0]), taskArr[2], taskArr[3], Status.valueOf(taskArr[4]), Integer.parseInt(taskArr[8]), Integer.parseInt(taskArr[5]), taskArr[6]);
                 addSubTask(subTask);
-                return subTask;
             default:
-                Task task = new Task(Integer.parseInt(taskArr[0]), taskArr[2], taskArr[3], Status.valueOf(taskArr[4]));
+                Task task = new Task(Integer.parseInt(taskArr[0]), taskArr[2], taskArr[3], Status.valueOf(taskArr[4]), Integer.parseInt(taskArr[5]), taskArr[6]);
                 addTask(task);
-                return task;
         }
     }
 }
