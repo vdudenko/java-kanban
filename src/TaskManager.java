@@ -41,6 +41,4 @@ public interface TaskManager {
     ArrayList<SubTask> getEpicSubtasks(int epicId);
 
     int getNextTaskId();
-
-    void setEpicDateTimesAndDuration(int epicId);
 }

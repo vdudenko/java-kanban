@@ -17,7 +17,7 @@ public class InMemoryTaskManager implements TaskManager {
             if (task1.startTime != null && task2.startTime != null) {
                 if (task1.startTime.isAfter(task2.startTime)) {
                     return 1;
-                } else if (task1.startTime == (task2.startTime)) {
+                } else if (task1.startTime.isEqual(task2.startTime)) {
                     return -1;
                 }
             } else if (task1.startTime != null) {
@@ -196,8 +196,8 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
-    @Override
-    public void setEpicDateTimesAndDuration(int epicId) {
+
+    private void setEpicDateTimesAndDuration(int epicId) {
         Epic epic = epics.get(epicId);
         if (!epic.subTaskIds.isEmpty()) {
             LocalDateTime startTime;
