@@ -3,7 +3,6 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 public class TasksHandler extends BaseHttpHandler implements HttpHandler {
 
