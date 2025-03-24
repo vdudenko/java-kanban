@@ -10,7 +10,6 @@ public class Task {
     public TaskType type = TaskType.TASK;
     public Duration duration;
     public LocalDateTime startTime;
-    public final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     public Task(String name, String description) {
         this.name = name;
@@ -23,6 +22,7 @@ public class Task {
         this.description = description;
         this.status = status;
         this.duration = Duration.ofMinutes(duration);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         this.startTime = LocalDateTime.parse(startTime, formatter);
     }
 
@@ -32,6 +32,7 @@ public class Task {
         this.description = description;
         this.status = status;
         this.duration = Duration.ofMinutes(duration);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         this.startTime = LocalDateTime.parse(startTime, formatter);
     }
 
@@ -47,10 +48,6 @@ public class Task {
         this.duration = duration;
     }
 
-    public Duration getDuration() {
-        return duration;
-    }
-
     public String getDurationStr() {
         return duration != null ? String.valueOf(duration.toMinutes()) : "";
     }
@@ -64,6 +61,7 @@ public class Task {
     }
 
     public String getStartTimeFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         return startTime != null ? startTime.format(formatter) : "";
     }
 
@@ -72,7 +70,7 @@ public class Task {
     }
 
     public String getEndTimeFormat() {
-
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             return startTime != null ? startTime.plus(duration).format(formatter) : "";
     }
 

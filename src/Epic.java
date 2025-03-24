@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Epic extends Task {
@@ -16,6 +17,7 @@ public class Epic extends Task {
     }
 
     public String getEndTimeFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         return endTime != null ? endTime.format(formatter) : "";
     }
 
