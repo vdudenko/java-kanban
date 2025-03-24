@@ -19,6 +19,7 @@ public class HttpTaskServer {
         httpServer.createContext("/history", new HistoryHandler(taskManager));
         httpServer.createContext("/prioritized", new PrioritizedHandler(taskManager));
     }
+
     public static void main(String[] args) throws IOException {
         final HttpTaskServer httpTaskServer = new HttpTaskServer(Managers.getDefault());
         httpTaskServer.start();
@@ -36,6 +37,7 @@ public class HttpTaskServer {
     public void start() {
         httpServer.start();
     }
+
     public void stop() {
         httpServer.stop(0);
     }
