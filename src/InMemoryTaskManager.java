@@ -14,23 +14,21 @@ public class InMemoryTaskManager implements TaskManager {
     public InMemoryTaskManager() {
         historyManager = Managers.getDefaultHistory();
         prioritizedTasks = new TreeSet<>((Task task1, Task task2) -> {
-            if (task1.startTime != null && task2.startTime != null) {
-                if (task1.startTime.isAfter(task2.startTime)) {
-                    return 1;
-                } else if (task1.startTime.isEqual(task2.startTime)) {
+            if (task1 != null) {
+                if (task1.startTime != null && task2.startTime != null) {
+                    if (task1.startTime.isAfter(task2.startTime)) {
+                        return 1;
+                    } else if (task1.startTime.isEqual(task2.startTime)) {
+                        return -1;
+                    }
+                } else if (task1.startTime != null) {
                     return -1;
+                } else if (task2.startTime != null) {
+                    return 1;
                 }
-            } else if (task1.startTime != null) {
-                return -1;
-            } else if (task2.startTime != null) {
-                return 1;
             }
             return -1;
         });
-    }
-
-    public List<Task> getPrioritizedTasks() {
-        return new ArrayList<>(prioritizedTasks);
     }
 
     public int getNextTaskId() {
@@ -74,8 +72,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void addTask(Task task) {
-        if (isIntersected(task)) return;
+    public void addTask(Task task) throws TaskIntersectedException {
+        if (isIntersected(task)) throw new TaskIntersectedException("Not Acceptable");
         if (task.getId() == 0) {
             task.setId(generateId());
         }
@@ -93,8 +91,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void addSubTask(SubTask subTask) {
-        if (isIntersected(subTask)) return;
+    public void addSubTask(SubTask subTask) throws TaskIntersectedException {
+        if (isIntersected(subTask)) throw new TaskIntersectedException("Not Acceptable");
         Epic epic = epics.get(subTask.getEpicId());
         int subTaskId = subTask.getId();
 
@@ -113,8 +111,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Task task) {
-        if (isIntersected(task)) return;
+    public void updateTask(Task task) throws TaskIntersectedException {
+        if (isIntersected(task)) throw new TaskIntersectedException("Not Acceptable");
         tasks.put(task.getId(), task);
     }
 
@@ -125,8 +123,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateSubTask(SubTask subTask) {
-        if (isIntersected(subTask)) return;
+    public void updateSubTask(SubTask subTask) throws TaskIntersectedException {
+        if (isIntersected(subTask)) throw new TaskIntersectedException("Not Acceptable");
         subTasks.put(subTask.getId(), subTask);
         updateEpicStatus(subTask.getEpicId());
         setEpicDateTimesAndDuration(subTask.getEpicId());
@@ -194,6 +192,11 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
+    }
+
+    @Override
+    public List<Task> getPrioritizedTasks() {
+        return new ArrayList<>(prioritizedTasks);
     }
 
 
