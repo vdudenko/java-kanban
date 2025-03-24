@@ -22,7 +22,7 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
                 sendText(exchange, gson.toJson(manager.getEpics()));
                 break;
             case GET_EPIC:
-                try{
+                try {
                     Epic epic = manager.getEpic(Integer.parseInt(pathParts[2]));
                     sendText(exchange, gson.toJson(epic));
                 } catch (NullPointerException e) {

@@ -23,7 +23,7 @@ public class SubTaskHandler extends BaseHttpHandler implements HttpHandler {
                 sendText(exchange, gson.toJson(manager.getSubTasks()));
                 break;
             case GET_SUB_TASK:
-                try{
+                try {
                     SubTask subTask = manager.getSubTask(Integer.parseInt(pathParts[2]));
                     sendText(exchange, gson.toJson(subTask));
                 } catch (NullPointerException e) {

@@ -23,7 +23,7 @@ public class TasksHandler extends BaseHttpHandler implements HttpHandler {
                 sendText(exchange, gson.toJson(manager.getTasks()));
                 break;
             case GET_TASK:
-                try{
+                try {
                     Task task = manager.getTask(Integer.parseInt(pathParts[2]));
                     sendText(exchange, gson.toJson(task));
                 } catch (NullPointerException e) {
